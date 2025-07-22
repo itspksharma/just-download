@@ -13,7 +13,7 @@ CATS = {
 class DownloaderApp(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Just Download 1.0 - Media Downloader")
+        self.setWindowTitle("Just-Download ver-1.0 - Media Downloader")
         self.setGeometry(200,100,950,600)
         self.download_path = ensure_downloads_folder()
         self.theme = "dark"
@@ -22,7 +22,7 @@ class DownloaderApp(QWidget):
 
     def setup_ui(self):
         layout = QVBoxLayout()
-        header=QLabel("Just Download 1.0"); header.setAlignment(Qt.AlignCenter)
+        header=QLabel("Just - Download"); header.setAlignment(Qt.AlignCenter)
         header.setFont(QFont("Arial",20,QFont.Bold)); layout.addWidget(header)
 
         h=QHBoxLayout()
