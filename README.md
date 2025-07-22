@@ -1,4 +1,4 @@
-# Just Download - Media Downloader App
+# Just Download ver-1.0  - Media Downloader App 
 
 ![App Screenshot](assets/screenshots/main_ui.png)
 
