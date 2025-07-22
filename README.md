@@ -114,3 +114,5 @@ This project is licensed under the MIT License.
 ---
 
 
+
+Disclaimer: This tool is for educational and personal use only. Downloading copyrighted content without permission may violate YouTube’s Terms of Service. The creator is not responsible for misuse.
