@@ -1,0 +1,33 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# VSCode settings
+.vscode/
+*.code-workspace
+
+# Compiled and temp files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Build/dist folders (if you create .exe later)
+build/
+dist/
+*.spec
+
+# Output/Download folders
+downloads/
+output/
+
+# ENV
+.env
+.venv/
+venv/
