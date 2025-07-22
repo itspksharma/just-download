@@ -61,22 +61,22 @@ def _download_video(url, format, row_id, folder, signals):
             if total:
                 pct = int(downloaded * 100 / total)
                 signals.progress.emit(row_id, pct)
-        if 'info_dict' in d and 'title' in d['info_dict'] and not holder.get('t'):
-            t = sanitize_filename(d['info_dict']['title'])
-            e = d['info_dict'].get('ext', 'mp4')
-            fname = f"{t}.{e}"
-            holder['t'] = fname
-            signals.title.emit(row_id, fname)
+
         if d.get('status') == 'finished':
             signals.done.emit(row_id)
 
     ydl_opts = {
-        'outtmpl': os.path.join(folder, '%(title)s.%(ext)s'),
-        'noplaylist': True,
-        'progress_hooks': [hook],
-        'merge_output_format': 'mp4',
-        'quiet': False
+    'outtmpl': os.path.join(folder, '%(title)s.%(ext)s'),
+    'noplaylist': True,
+    'progress_hooks': [hook],
+    'merge_output_format': 'mp4',
+    'quiet': False,
+    'http_headers': {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        }
     }
+
+
     if format == 'mp3':
         ydl_opts.update({
             'format': 'bestaudio/best',
@@ -87,15 +87,29 @@ def _download_video(url, format, row_id, folder, signals):
     elif format == 'webm_audio':
         ydl_opts['format']='bestaudio[ext=webm]/bestaudio/best'
     elif format.startswith('mp4') or format.startswith('webm'):
-        pass  # above merge_output_format handles it
+        pass  # handled above
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            # ✅ Step 1: Extract info before download
+            info = ydl.extract_info(url, download=False)
+
+            # ✅ Step 2: Get title and extension
+            t = sanitize_filename(info.get('title', 'untitled'))
+            e = info.get('ext') or 'mp4'
+            fname = f"{t}.{e}"
+
+            # ✅ Step 3: Emit title early
+            signals.title.emit(row_id, fname)
+
+            # ✅ Step 4: Start actual download
             ydl.download([url])
+
         print("✅ Download complete.")
     except Exception as e:
         print("❌ yt-dlp fail:", e)
         signals.done.emit(row_id)
+
 
 def _download_image(url, row_id, folder, signals):
     fname = os.path.basename(urlparse(url).path) or "image.jpg"

@@ -31,3 +31,8 @@ output/
 .env
 .venv/
 venv/
+
+#package for JustDownload
+JustDownload_Package/
+*.exe
+*.zip
